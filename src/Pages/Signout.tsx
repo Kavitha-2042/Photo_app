@@ -7,7 +7,7 @@ const Signout = () => {
 
     useEffect(() => {
        localStorage.clear()
-       navigate('/home')
+       navigate('/')
     });
 
   return (

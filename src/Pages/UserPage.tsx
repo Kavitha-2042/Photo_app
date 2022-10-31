@@ -1,11 +1,17 @@
 import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material'
+
 import axios from 'axios'
 import React, {useState} from 'react'
+
+//import { initialize } from '../Redux/Slices/imageSlice' 
+import { useNavigate } from 'react-router-dom';
 
 const UserPage = () => {
 
     const [inputFile, setInputFile] = useState("")
     const [fileUpload, setFileUpload] = useState("")
+
+    const navigate = useNavigate()
 
     const formData = new FormData()
     formData.append('image', inputFile)
@@ -18,17 +24,27 @@ const UserPage = () => {
     const eventHandler = (e:any) =>{
         e.preventDefault();
 
+
         axios.post('/user/imageupload', formData)
         .then((result)=>{
-            console.log("Result: ",result.data)
-            setFileUpload(result.data.file)
+            console.log("Result: ",result.data.file)
+            if(result){
+              setFileUpload(result.data.file)
+              navigate('/allphotos')
+            }
+            alert(result.data.message)
         })
         .catch(err=>console.log(err))
 
     }
 
+    
   return (
-    <div>
+
+  <div>
+
+      
+
         <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
@@ -42,14 +58,16 @@ const UserPage = () => {
             
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          
             <a href='/'> 
             Home
             </a>
             
           </Typography>
+          <Button  style={{color:"white"}}><a href="/userpage">Upload</a></Button>
           <Button  style={{color:"white"}}><a href="/allphotos">All Photos</a></Button>
-          <Button  ><a href="/userpage">My Photos</a></Button>
-          <Button  ><a href="/signout">Signout</a></Button>
+          <Button  style={{color:"white"}}><a href="/myphotos">My Photos</a></Button>
+          <Button  style={{color:"white"}}><a href="/signout">Signout</a></Button>
         </Toolbar>
       </AppBar> 
     </Box>
@@ -58,7 +76,8 @@ const UserPage = () => {
     <div className='container' >
         <div className='row'>
             <form action="" style={{textAlign:'center'}}>
-                <h1>File Uploads</h1>
+                <h1 style={{textAlign:"center", marginTop:"20px", fontSize:"30px"}}>File Uploads</h1>
+                <br />
                 <div className='form-group' >
                     <input type="file" multiple  style={{fontSize:"15px"}} onChange={formHandler} />
                 </div>
@@ -70,7 +89,15 @@ const UserPage = () => {
             
         </div>
     </div>
-    <img src={`http://localhost:5000/${fileUpload}`} alt='file' style={{maxWidth:"500px"}}/>
+    
+        {
+      (fileUpload)?<img src={`http://localhost:5000/${fileUpload}`} alt='' style={{maxWidth:"500px"}}/>
+      
+      :<></>
+    }
+    {/* <img src={`http://localhost:5000/${fileUpload}`} alt='' style={{maxWidth:"500px"}}/> */}
+    
+
     </div>
   )
 }

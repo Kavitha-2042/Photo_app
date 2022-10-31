@@ -1,5 +1,7 @@
-import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material'
+import { AppBar, Box, Button,Toolbar, Typography } from '@mui/material'
 import React from 'react'
+
+
 
 const Home = () => {
   return (
@@ -7,23 +9,15 @@ const Home = () => {
         <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            
-          </IconButton>
+         
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <a href='/home'> 
+            <a href='/'> 
             Home
             </a>
             
           </Typography>
           <Button  style={{color:"white"}}><a href="/signup">Signup</a></Button>
-          <Button  ><a href="/signin">Signin</a></Button>
+          <Button  style={{color:"white"}}><a href="/signin">Signin</a></Button>
         </Toolbar>
       </AppBar>
     </Box>
