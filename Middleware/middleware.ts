@@ -16,9 +16,10 @@ export const middleware = (req:ModifiedRequest, res:express.Response, next:expre
             let verifying = jwt.verify(token,process.env.SECRET_KEY as string) 
 
             let decoding:any = jwt.decode(token)
+            console.log(decoding)
     
-            if(req.path !== '/signup' && req.path !== '/signin'){
-                userModel.findById({_id:decoding._id})
+            if(req.path !== '/signup' && req.path !== '/signin' ){
+                userModel.findById(decoding._id)
                 .then((response)=>{
                     if(response?.password){
                         response.password=''
